@@ -10,26 +10,15 @@ repositories {
 }
 
 dependencies {
-	/* Scala    */ compile(group: 'org.scala-lang',   name: 'scala-library',       version: '2.11.2')
-	/* Dispatch */ compile(group: 'net.databinder',   name: 'dispatch-jsoup_2.11', version: '0.8.10')
-	/* Scopt    */ compile(group: 'com.github.scopt', name: 'scopt_2.11',          version: '3.2.0')
-	/* XML      */ compile(group: 'org.scala-lang',   name: 'scala-xml',           version: '2.11.0-M4')
+	/* Scala    */ compile(group: 'org.scala-lang',    name: 'scala-library',       version: '2.11.4')
+	/* Dispatch */ compile(group: 'net.databinder',    name: 'dispatch-jsoup_2.11', version: '0.8.10')
+	/* Scopt    */ compile(group: 'com.github.scopt',  name: 'scopt_2.11',          version: '3.2.0')
+	/* XML      */ compile(group: 'org.scala-lang',    name: 'scala-xml',           version: '2.11.0-M4')
+	/* Akka     */ compile(group: 'com.typesafe.akka', name: 'akka-actor_2.11',     version: '2.3.8')
 	
 	/* ScalaTest */ testCompile(group: 'org.scalatest', name: 'scalatest_2.11',                   version: '2.2.0')
 	/* ScalaMock */ testCompile(group: 'org.scalamock', name: 'scalamock-scalatest-support_2.11', version: '3.1.4')
 }
-
-task pack(type: Jar) {
-	manifest {
-		attributes 'Implementation-Title': 'Blocknet',
-				   'Implementation-Version': version,
-				   'Main-Class': 'me.axiometry.hackerpacker.Main'
-	}
-	baseName = project.name + '-all'
-	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-	with jar
-}
-tasks.assemble.dependsOn(pack)
 
 eclipse {
 	classpath {
