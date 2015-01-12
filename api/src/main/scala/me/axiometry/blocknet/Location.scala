@@ -60,17 +60,7 @@ object Location {
   }
 
   protected[this] trait extraImplicits {
-    implicit def numericTuple2Precise(tuple: (AnyVal, AnyVal, AnyVal)) = {
-      def asDouble(v: AnyVal) = v match {
-        case v: Byte => v.toDouble
-        case v: Short => v.toDouble
-        case v: Int => v.toDouble
-        case v: Long => v.toDouble
-        case v: Float => v.toDouble
-        case v: Double => v
-      }
-      tuple match { case (x, y, z) => Precise(asDouble(x), asDouble(y), asDouble(z)) }
-    }
+    implicit def tuple2Precise(tuple: (Double, Double, Double)) = Precise(tuple._1, tuple._2, tuple._3)
   }
   object implicits extends extraImplicits {
     implicit def convert2Precise(loc: Conversions): Precise = loc.toPrecise
