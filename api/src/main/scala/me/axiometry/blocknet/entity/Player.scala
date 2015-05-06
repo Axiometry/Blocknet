@@ -1,5 +1,5 @@
 package me.axiometry.blocknet.entity
 
-trait Player extends LivingEntity {
-  
-}
+import me.axiometry.blocknet.item._
+
+trait Player extends Humanoid
