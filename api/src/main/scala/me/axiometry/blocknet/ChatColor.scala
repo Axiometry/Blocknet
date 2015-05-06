@@ -1,14 +1,14 @@
 package me.axiometry.blocknet
 
-sealed abstract class ChatColor(val code: Char, val id: Int) {
-  private val string = new String(Array[Char](ChatColor.colorCode, code))
+sealed abstract class ChatColor(val code: Char) {
+  private val string = new String(Array[Char](ChatColor.colorCode))
 
   override def toString() = string
-  override def hashCode() = id
+  override def hashCode() = code
 }
-sealed abstract class ColorChatColor(code: Char, id: Int) extends ChatColor(code, id)
-sealed abstract class FormatChatColor(code: Char, id: Int) extends ChatColor(code, id)
-sealed abstract class ResetChatColor(code: Char, id: Int) extends ChatColor(code, id)
+sealed abstract class ColorChatColor(code: Char) extends ChatColor(code)
+sealed abstract class FormatChatColor(code: Char) extends ChatColor(code)
+sealed abstract class ResetChatColor(code: Char) extends ChatColor(code)
 object ChatColor {
   val colorCode = '\u00A7'
 
@@ -29,35 +29,33 @@ object ChatColor {
         Underline, Italic)
 
   private final val stripColorPattern = java.util.regex.Pattern.compile(s"$colorCode[0-9A-FK-ORa-fk-or]")
-  private final val codeMappings: Map[Char, ChatColor] = values map (c => c.code -> c) toMap
-  private final val idMappings: Map[Int, ChatColor] = values map (c => c.id -> c) toMap
+  private final val codeMappings: Map[Char, ChatColor] = values.map(c => c.code -> c).toMap
 
-  def byCode(code: Char) = codeMappings get code
-  def byId(id: Int) = idMappings get id
-  def strip(string: String) = stripColorPattern matcher string replaceAll ""
+  def byCode(code: Char) = codeMappings.get(code)
+  def strip(string: String) = stripColorPattern.matcher(string).replaceAll("")
 
-  object Black extends ColorChatColor('0', 0x00)
-  object DarkBlue extends ColorChatColor('1', 0x01)
-  object DarkGreen extends ColorChatColor('2', 0x02)
-  object DarkAqua extends ColorChatColor('3', 0x03)
-  object DarkRed extends ColorChatColor('4', 0x04)
-  object DarkPurple extends ColorChatColor('5', 0x05)
-  object Gold extends ColorChatColor('6', 0x06)
-  object Gray extends ColorChatColor('7', 0x07)
-  object DarkGray extends ColorChatColor('8', 0x08)
-  object Blue extends ColorChatColor('9', 0x09)
-  object Green extends ColorChatColor('a', 0x0A)
-  object Aqua extends ColorChatColor('b', 0x0B)
-  object Red extends ColorChatColor('c', 0x0C)
-  object LightPurple extends ColorChatColor('d', 0x0D)
-  object Yellow extends ColorChatColor('e', 0x0E)
-  object White extends ColorChatColor('f', 0x0F)
+  case object Black extends ColorChatColor('0')
+  case object DarkBlue extends ColorChatColor('1')
+  case object DarkGreen extends ColorChatColor('2')
+  case object DarkAqua extends ColorChatColor('3')
+  case object DarkRed extends ColorChatColor('4')
+  case object DarkPurple extends ColorChatColor('5')
+  case object Gold extends ColorChatColor('6')
+  case object Gray extends ColorChatColor('7')
+  case object DarkGray extends ColorChatColor('8')
+  case object Blue extends ColorChatColor('9')
+  case object Green extends ColorChatColor('a')
+  case object Aqua extends ColorChatColor('b')
+  case object Red extends ColorChatColor('c')
+  case object LightPurple extends ColorChatColor('d')
+  case object Yellow extends ColorChatColor('e')
+  case object White extends ColorChatColor('f')
 
-  object Obfuscated extends FormatChatColor('k', 0x10)
-  object Bold extends FormatChatColor('l', 0x11)
-  object Strikethrough extends FormatChatColor('m', 0x12)
-  object Underline extends FormatChatColor('n', 0x13)
-  object Italic extends FormatChatColor('o', 0x14)
+  case object Obfuscated extends FormatChatColor('k')
+  case object Bold extends FormatChatColor('l')
+  case object Strikethrough extends FormatChatColor('m')
+  case object Underline extends FormatChatColor('n')
+  case object Italic extends FormatChatColor('o')
 
-  object Reset extends ResetChatColor('r', 0x15)
+  case object Reset extends ResetChatColor('r')
 }
