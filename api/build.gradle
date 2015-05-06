@@ -10,11 +10,11 @@ repositories {
 }
 
 dependencies {
-	/* Scala    */ compile(group: 'org.scala-lang',    name: 'scala-library',       version: '2.11.4')
-	/* Dispatch */ compile(group: 'net.databinder',    name: 'dispatch-jsoup_2.11', version: '0.8.10')
-	/* Scopt    */ compile(group: 'com.github.scopt',  name: 'scopt_2.11',          version: '3.2.0')
-	/* XML      */ compile(group: 'org.scala-lang',    name: 'scala-xml',           version: '2.11.0-M4')
-	/* Akka     */ compile(group: 'com.typesafe.akka', name: 'akka-actor_2.11',     version: '2.3.8')
+	/* Scala    */ compile(group: 'org.scala-lang',    name: 'scala-library',   version: '2.11.4')
+	/* Scopt    */ compile(group: 'com.github.scopt',  name: 'scopt_2.11',      version: '3.2.0')
+	/* XML      */ compile(group: 'org.scala-lang',    name: 'scala-xml',       version: '2.11.0-M4')
+	/* Akka     */ compile(group: 'com.typesafe.akka', name: 'akka-actor_2.11', version: '2.3.8')
+	/* RxScala  */ compile(group: 'io.reactivex',      name: 'rxscala_2.11',    version: '0.24.1')
 	
 	/* ScalaTest */ testCompile(group: 'org.scalatest', name: 'scalatest_2.11',                   version: '2.2.0')
 	/* ScalaMock */ testCompile(group: 'org.scalamock', name: 'scalamock-scalatest-support_2.11', version: '3.1.4')
