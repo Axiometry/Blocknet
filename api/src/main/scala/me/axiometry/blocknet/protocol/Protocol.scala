@@ -1,5 +1,13 @@
 package me.axiometry.blocknet.protocol
 
-trait Protocol {
+import rx.lang.scala.Observable
 
+trait Protocol {
+  def state: State
+  def blockRegistry: BlockRegistry
+
+  def stream: Observable[Packet]
+
+  def send(message: Message)
+  def connected: Boolean
 }
