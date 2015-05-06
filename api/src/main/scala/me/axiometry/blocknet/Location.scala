@@ -13,7 +13,7 @@ object Location {
     def toBlockExact(): Block
     def toChunkExact(): Chunk
   }
-  final case class Precise private (x: Double, y: Double, z: Double) extends Conversions with ExactConversions {
+  final case class Precise(x: Double, y: Double, z: Double) extends Conversions with ExactConversions {
     if(x.isNaN || y.isNaN || z.isNaN || x.isInfinity || y.isInfinity || z.isInfinity)
       throw new IllegalArgumentException("invalid coordinates")
 
@@ -30,7 +30,7 @@ object Location {
     override def toBlockExact() = toBlock
     override def toChunkExact() = toChunk
   }
-  final case class Block private (x: Integer, y: Integer, z: Integer) extends Conversions with ExactConversions {
+  final case class Block(x: Integer, y: Integer, z: Integer) extends Conversions with ExactConversions {
     def +(loc: Block) = Block(x + loc.x, y + loc.y, z + loc.z)
     def -(loc: Block) = Block(x - loc.x, y - loc.y, z - loc.z)
 
@@ -44,7 +44,7 @@ object Location {
     override def toBlockExact() = this
     override def toChunkExact() = toChunk
   }
-  final case class Chunk private (x: Integer, y: Integer, z: Integer) extends Conversions with ExactConversions {
+  final case class Chunk(x: Integer, y: Integer, z: Integer) extends Conversions with ExactConversions {
     def +(loc: Chunk) = Chunk(x + loc.x, y + loc.y, z + loc.z)
     def -(loc: Chunk) = Chunk(x - loc.x, y - loc.y, z - loc.z)
 
