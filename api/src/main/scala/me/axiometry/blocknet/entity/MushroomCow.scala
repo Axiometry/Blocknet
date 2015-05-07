@@ -1,3 +1,5 @@
 package me.axiometry.blocknet.entity
 
-trait MushroomCow extends Animal
+trait MushroomCow extends Animal {
+  override type EntityType <: MushroomCow
+}

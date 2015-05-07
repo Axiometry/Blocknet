@@ -1,6 +1,8 @@
 package me.axiometry.blocknet.entity
 
 trait Horse extends Animal with Animal.Tameable with Animal.Rideable {
+  override type EntityType <: Horse
+
   trait Breed
   object Breed {
     case object Horse extends Breed
@@ -14,4 +16,9 @@ trait Horse extends Animal with Animal.Tameable with Animal.Rideable {
   def rearing: Boolean
   def eating: Boolean
   def breed: Breed
+
+  def hasChest_=(hasChest: Boolean): EntityType
+  def rearing_=(rearing: Boolean): EntityType
+  def eating_=(eating: Boolean): EntityType
+  def breed_=(breed: Breed): EntityType
 }

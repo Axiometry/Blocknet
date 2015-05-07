@@ -5,15 +5,17 @@ import me.axiometry.blocknet.block._
 import me.axiometry.blocknet.protocol.Protocol
 
 trait Bot extends Player {
-  def world: World
+  override type EntityType <: Bot
+
   def gameMode: GameMode
   def hunger: Int
   def level: Int
   def experience: Int
-  def totalExperience: Int
-  def experienceToNextLevel: Int
-  def sneaking: Boolean
-  def sprinting: Boolean
+
+  def gameMode_=(gameMode: GameMode): EntityType
+  def hunger_=(hunger: Int): EntityType
+  def level_=(level: Int): EntityType
+  def experience_=(experience: Int): EntityType
 
   def protocol: Protocol
 

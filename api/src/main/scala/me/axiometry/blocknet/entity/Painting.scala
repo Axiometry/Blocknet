@@ -4,6 +4,8 @@ import me.axiometry.blocknet.Location
 import me.axiometry.blocknet.block.BlockFace
 
 trait Painting extends Entity {
+  override type EntityType <: Painting
+
   sealed abstract class Art(name: String)
   object Art {
     case object Kebab extends Art("Kebab")
@@ -36,4 +38,8 @@ trait Painting extends Entity {
   def art: Art
   def block: Location.Block
   def direction: BlockFace
+
+  def art_=(art: Art): EntityType
+  def block_=(block: Location.Block): EntityType
+  def direction_=(direction: BlockFace): EntityType
 }
