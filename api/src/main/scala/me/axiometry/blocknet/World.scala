@@ -13,14 +13,14 @@ trait World {
     def update(loc: Location.Chunk, chunk: Chunk): World
   }
 
-  def terrain: WorldTerrain
+  def terrain: Terrain
   def dimension: Dimension
   def difficulty: Difficulty
   def height: Int
   def time: Long
   def age: Long
 
-  def terrain_=(terrain: WorldTerrain): World
+  def terrain_=(terrain: Terrain): World
   def dimension_=(dimension: Dimension): World
   def difficult_=(difficulty: Difficulty): World
   def height_=(height: Int): World
