@@ -15,7 +15,6 @@ trait Entity extends PreciseLocatable {
   def rider: Entity
   def riding: Entity
 
-  def world_=(world: World): EntityType
   def x_=(x: Double): EntityType
   def y_=(y: Double): EntityType
   def z_=(z: Double): EntityType

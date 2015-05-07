@@ -13,26 +13,27 @@ trait World {
     def update(loc: Location.Chunk, chunk: Chunk): World
   }
 
-  def `type`: WorldType
+  def terrain: WorldTerrain
   def dimension: Dimension
   def difficulty: Difficulty
   def height: Int
   def time: Long
   def age: Long
 
+  def terrain_=(terrain: WorldTerrain): World
+  def dimension_=(dimension: Dimension): World
+  def difficult_=(difficulty: Difficulty): World
+  def height_=(height: Int): World
   def time_=(time: Long): World
   def age_=(age: Long): World
-
-  def bots: Set[Bot]
-  def bots_+=(bot: Bot): World
-  def bots_-=(bot: Bot): World
-  def bots_=(bots: Set[Bot]): World
 
   def entities: Set[Entity]
   def entities_+=(entity: Entity): World
   def entities_-=(entity: Entity): World
   def entities_=(entities: Set[Entity]): World
   def entityById(id: Int)
+  def replaceEntity(original: Entity, updated: Entity): World
+  def createEntity[Type <: Entity](id: Int, loc: Location.Precise)
 
   def blockAt: BlockAccess
   def chunkAt: ChunkAccess
