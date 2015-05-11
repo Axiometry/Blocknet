@@ -10,25 +10,29 @@ import me.axiometry.blocknet.item._
 trait World {
   trait BlockAccess {
     /**
-     * Retrieve the block state at the specified block location.
+     * Retrieve the block state at the specified block location. This is
+     * guaranteed to exist if and only if the chunk at the specified location exists.
      */
-    def apply(loc: Location.Block): BlockState
+    def apply(loc: Location.Block): Option[BlockState]
 
     /**
-     * Set the block state at the specified block location.
+     * Set the block state at the specified block location. This will not
+     * perform any action if the chunk at the specified location does not exist.
      */
     def update(loc: Location.Block, block: BlockState)
   }
   trait ChunkAccess {
     /**
-     * Retrieve the chunk at the specified chunk location.
+     * Retrieve the chunk at the specified chunk location. None indicates a
+     * nonexistent chunk.
      */
-    def apply(loc: Location.Chunk): Chunk
+    def apply(loc: Location.Chunk): Option[Chunk]
 
     /**
-     * Set the chunk at the specified chunk location.
+     * Set the chunk at the specified chunk location. None indicates removing
+     * a chunk.
      */
-    def update(loc: Location.Chunk, chunk: Chunk)
+    def update(loc: Location.Chunk, chunk: Option[Chunk])
   }
 
   /**
@@ -128,15 +132,6 @@ trait World {
   def createEntity[Type <: Entity](id: Int, loc: Location.Precise): Type
 
   /**
-   * Create an item stack with the specified information.
-   *
-   * @param item The item of the stack
-   * @param data The data value of the stack
-   * @param size The size of the stack
-   */
-  def createItemStack(item: Item, data: Int = 0, size: Int = 1): ItemStack
-
-  /**
    * Returns a BlockAccess instance to get and update blocks in this world.
    */
   def blockAt: BlockAccess
@@ -145,4 +140,9 @@ trait World {
    * Returns a ChunkAccess instance to get and update blocks in this world.
    */
   def chunkAt: ChunkAccess
+
+  /**
+   * Create a chunk at the specified location.
+   */
+  def createChunk(loc: Location.Chunk): Chunk
 }

@@ -1,6 +1,7 @@
 package me.axiometry.blocknet
 
 import me.axiometry.blocknet._
+import me.axiometry.blocknet.item._
 
 /**
  * Represents the IP address of a Minecraft server.
@@ -40,9 +41,12 @@ trait Server {
   def worlds_=(worlds: Set[World])
 
   /**
-   * Create a new World instance.
+   * Create a new World instance with the specified information.
    */
-  def createWorld(): World
+  def createWorld(terrain: Terrain = Terrain.Default,
+                  dimension: Dimension = Dimension.Overworld,
+                  difficulty: Difficulty = Difficulty.Normal,
+                  height: Int = 256): World
 
   /**
    * The set of all the bots belonging to this server.
@@ -65,11 +69,21 @@ trait Server {
   def bots_=(bots: Set[Bot])
 
   /**
-   * Create a new Bot instance.
+   * Create a bot.
    *
    * @throws IOException if there was a failure attempting to connect to the server.
    */
   def createBot(): Bot
+
+  /**
+   * Create an item stack with the specified information.
+   */
+  def createItemStack(item: Item, data: Int = 0, size: Int = 1): ItemStack
+
+  /**
+   * Create a window with the specified ID.
+   */
+  def createWindow[Type <: Window](id: Int): Type
 }
 object Server {
   val DEFAULT_PORT = 25565
