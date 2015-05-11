@@ -1,7 +1,12 @@
 package me.axiometry.blocknet.item
 
 trait Inventory {
-  def itemAt(slot: Int): Option[ItemStack]
+  trait ItemAccess {
+    def apply(slot: Int): Option[ItemStack]
+    def update(slot: Int, item: Option[ItemStack])
+  }
+
+  def itemAt: ItemAccess
 
   def size: Int
 }

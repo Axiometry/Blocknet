@@ -1,7 +1,7 @@
 package me.axiometry.blocknet.entity
 
 import me.axiometry.blocknet._
-import me.axiometry.blocknet.item.Window
+import me.axiometry.blocknet.item._
 
 trait BotPlayer extends Player {
   def bot: Bot
@@ -11,6 +11,7 @@ trait BotPlayer extends Player {
   def hunger: Int
   def level: Int
   def experience: Int
+  def inventory: Inventory
 
   def window_=(window: Window)
   def gameMode_=(gameMode: GameMode)

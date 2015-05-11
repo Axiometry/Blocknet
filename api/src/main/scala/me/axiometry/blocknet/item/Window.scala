@@ -9,5 +9,7 @@ trait Window extends Inventory {
 
   def select(slot: Int, shift: Boolean = false, button: Button = Button.Left)
   def dropSelected(fullStack: Boolean = false)
+
   def selected: Option[ItemStack]
+  def selected_=(selected: Option[ItemStack])
 }
