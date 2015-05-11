@@ -19,5 +19,5 @@ trait BotPlayer extends Player {
   def experience_=(experience: Int)
 
   def swingArm()
-  def closeWindow(): BotPlayer
+  def closeWindow()
 }
