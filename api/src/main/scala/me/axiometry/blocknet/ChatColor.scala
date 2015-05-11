@@ -1,17 +1,44 @@
 package me.axiometry.blocknet
 
+/**
+ * Represents a chat color marker for use in Minecraft chat.
+ */
 sealed abstract class ChatColor(val code: Char) {
-  private val string = new String(Array[Char](ChatColor.colorCode))
+  private val string = new String(Array[Char](ChatColor.codePrefix, code))
 
+  /**
+   * The stringified version of the chat color with code prefix prepended.
+   */
   override def toString() = string
   override def hashCode() = code
 }
-sealed abstract class ColorChatColor(code: Char) extends ChatColor(code)
-sealed abstract class FormatChatColor(code: Char) extends ChatColor(code)
-sealed abstract class ResetChatColor(code: Char) extends ChatColor(code)
-object ChatColor {
-  val colorCode = '\u00A7'
 
+/**
+ * Represents a chat color marker of a color code for use in Minecraft chat.
+ *
+ */
+sealed abstract class ColorChatColor(code: Char) extends ChatColor(code)
+
+/**
+ * Represents a chat color marker of a format code for use in Minecraft chat.
+ */
+sealed abstract class FormatChatColor(code: Char) extends ChatColor(code)
+
+/**
+ * Represents a chat color marker of a reset code for use in Minecraft chat.
+ */
+sealed abstract class ResetChatColor(code: Char) extends ChatColor(code)
+
+object ChatColor {
+  /**
+   * The character that prepends a code in the chat to indicate
+   * the start of a chat color.
+   */
+  val codePrefix = '\u00A7'
+
+  /**
+   * The set of all possible chat colors.
+   */
   val values: Set[ChatColor] =
     Set(Black, DarkBlue, DarkGreen, DarkAqua,
         DarkRed, DarkPurple, Gold, Gray,
@@ -19,19 +46,41 @@ object ChatColor {
         Red, LightPurple, Yellow, White,
         Obfuscated, Bold, Strikethrough,
         Underline, Italic, Reset)
+
+  /**
+   * The set of all possible chat colors that represent color codes.
+   */
   val colors: Set[ColorChatColor] =
     Set(Black, DarkBlue, DarkGreen, DarkAqua,
         DarkRed, DarkPurple, Gold, Gray,
         DarkGray, Blue, Green, Aqua,
         Red, LightPurple, Yellow, White)
+
+  /**
+   * The set of all possible chat colors that represent format codes.
+   */
   val formats: Set[FormatChatColor] =
     Set(Obfuscated, Bold, Strikethrough,
         Underline, Italic)
 
-  private final val stripColorPattern = java.util.regex.Pattern.compile(s"$colorCode[0-9A-FK-ORa-fk-or]")
+  private final val stripColorPattern = java.util.regex.Pattern.compile(s"$codePrefix[0-9A-FK-ORa-fk-or]")
   private final val codeMappings: Map[Char, ChatColor] = values.map(c => c.code -> c).toMap
 
-  def byCode(code: Char) = codeMappings.get(code)
+  /**
+   * Retrieve a chat color by code.
+   *
+   * @param code The code corresponding to the chat color
+   * @return The color corresponding to the code
+   */
+  def apply(code: Char) = codeMappings.get(code)
+  def unapply(color: ChatColor): Option[Char] = Some(color.code)
+
+  /**
+   * Remove all chat colors from a string.
+   *
+   * @param string The string to filter
+   * @return A string containing no chat colors
+   */
   def strip(string: String) = stripColorPattern.matcher(string).replaceAll("")
 
   case object Black extends ColorChatColor('0')

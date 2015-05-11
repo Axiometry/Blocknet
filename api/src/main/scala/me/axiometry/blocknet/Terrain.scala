@@ -1,7 +1,14 @@
 package me.axiometry.blocknet
 
+/**
+ * Represents a Minecraft world type.
+ */
 sealed abstract class Terrain
+
 object Terrain {
+  /**
+   * The set of all terrains.
+   */
   val values: Set[Terrain] = Set(Default, Flat, Default_1_1, LargeBiomes, Amplified)
 
   case object Default extends Terrain
