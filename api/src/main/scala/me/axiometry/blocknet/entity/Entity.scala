@@ -2,7 +2,7 @@ package me.axiometry.blocknet.entity
 
 import me.axiometry.blocknet._
 
-trait Entity extends PreciseLocatable {
+trait Entity extends WorldLocatable with PreciseLocatable {
   def id: Int
   def x: Double
   def y: Double
@@ -20,7 +20,7 @@ trait Entity extends PreciseLocatable {
   def rider_=(rider: Entity)
   def riding_=(riding: Entity)
 
-  def location = Location.Precise(x, y, z)
+  override def location = Location.Precise(x, y, z)
   def boundingBox: BoundingBox
 
   def location_=(location: Location.Precise) = {

@@ -2,10 +2,7 @@ package me.axiometry.blocknet.block
 
 import me.axiometry.blocknet._
 
-trait BlockState extends BlockLocatable {
-  def world: World
-  def chunk: Chunk
-
+trait BlockState extends WorldLocatable with BlockLocatable {
   def block: Block
   def data: Option[Block.Data]
   def light: Int

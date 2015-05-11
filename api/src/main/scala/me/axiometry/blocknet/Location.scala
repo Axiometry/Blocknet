@@ -277,7 +277,14 @@ object Location {
 }
 
 /**
- * Represents an object that has a precise location within a Minecraft world.
+ * Represents an object that has a reference to its containing world.
+ */
+trait WorldLocatable {
+  def world: World
+}
+
+/**
+ * Represents an object that has a precise location within a world.
  */
 trait PreciseLocatable {
   def location: Location.Precise
@@ -286,7 +293,7 @@ trait PreciseLocatable {
 }
 
 /**
- * Represents an object that has a block location within a Minecraft world.
+ * Represents an object that has a block location within a world.
  */
 trait BlockLocatable {
   def location: Location.Block
@@ -295,7 +302,7 @@ trait BlockLocatable {
 }
 
 /**
- * Represents an object that has a chunk location within a Minecraft world.
+ * Represents an object that has a chunk location within a world.
  */
 trait ChunkLocatable {
   def location: Location.Chunk
