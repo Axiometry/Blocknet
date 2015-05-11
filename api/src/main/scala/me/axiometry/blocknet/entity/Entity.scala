@@ -6,7 +6,6 @@ trait Entity extends PreciseLocatable {
   type EntityType <: Entity
 
   def id: Int
-  def world: World
   def x: Double
   def y: Double
   def z: Double
