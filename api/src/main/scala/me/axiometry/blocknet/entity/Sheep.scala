@@ -1,8 +1,6 @@
 package me.axiometry.blocknet.entity
 
 trait Sheep extends Animal {
-  override type EntityType <: Sheep
-
   sealed trait Color
   object Color {
     case object White extends Color
@@ -26,6 +24,6 @@ trait Sheep extends Animal {
   def sheared: Boolean
   def color: Int
 
-  def sheared_=(sheared: Boolean): EntityType
-  def color_=(color: Int): EntityType
+  def sheared_=(sheared: Boolean)
+  def color_=(color: Int)
 }

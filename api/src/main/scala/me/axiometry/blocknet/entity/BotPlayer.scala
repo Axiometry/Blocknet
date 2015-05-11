@@ -4,8 +4,6 @@ import me.axiometry.blocknet._
 import me.axiometry.blocknet.item.Window
 
 trait BotPlayer extends Player {
-  override type EntityType <: BotPlayer
-
   def bot: Bot
 
   def window: Window
@@ -14,11 +12,11 @@ trait BotPlayer extends Player {
   def level: Int
   def experience: Int
 
-  def window_=(window: Window): EntityType
-  def gameMode_=(gameMode: GameMode): EntityType
-  def hunger_=(hunger: Int): EntityType
-  def level_=(level: Int): EntityType
-  def experience_=(experience: Int): EntityType
+  def window_=(window: Window)
+  def gameMode_=(gameMode: GameMode)
+  def hunger_=(hunger: Int)
+  def level_=(level: Int)
+  def experience_=(experience: Int)
 
   def swingArm()
   def closeWindow(): BotPlayer

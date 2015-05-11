@@ -3,8 +3,6 @@ package me.axiometry.blocknet.entity
 import me.axiometry.blocknet.item._
 
 trait Humanoid extends Creature {
-  override type EntityType <: Humanoid
-
   trait Armor {
     def helmet: Option[ItemStack]
     def chestplate: Option[ItemStack]
@@ -20,6 +18,6 @@ trait Humanoid extends Creature {
   def armor: Armor
   def heldItem: Option[ItemStack]
 
-  def armor_=(armor: Armor): EntityType
-  def heldItem_=(heldItem: Option[ItemStack]): EntityType
+  def armor_=(armor: Armor)
+  def heldItem_=(heldItem: Option[ItemStack])
 }

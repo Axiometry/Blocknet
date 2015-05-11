@@ -1,13 +1,7 @@
 package me.axiometry.blocknet.entity
 
-trait Vehicle extends Entity {
-  override type EntityType <: Vehicle
-}
+trait Vehicle extends Entity
 object Vehicle {
-  trait Rideable extends Vehicle {
-    override type EntityType <: Rideable
-  }
-  trait Storage extends Vehicle {
-    override type EntityType <: Storage
-  }
+  trait Rideable extends Vehicle
+  trait Storage extends Vehicle
 }

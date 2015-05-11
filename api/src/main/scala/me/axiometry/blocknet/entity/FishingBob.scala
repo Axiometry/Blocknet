@@ -1,5 +1,3 @@
 package me.axiometry.blocknet.entity
 
-trait FishingBob extends Projectile {
-  override type EntityType <: FishingBob
-}
+trait FishingBob extends Projectile

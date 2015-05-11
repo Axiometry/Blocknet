@@ -11,8 +11,10 @@ trait BlockState extends BlockLocatable {
   def light: Int
   def entity: Option[BlockEntity]
 
-  def block_=(block: Block): BlockState
-  def data_=(data: Option[Block.Data]): BlockState
-  def light_=(light: Int): BlockState
-  def entity_=(entity: Option[BlockEntity]): BlockState
+  def withBlock(block: Block): BlockState
+  def withData(data: Option[Block.Data]): BlockState
+  def withLight(light: Int): BlockState
+  def withEntity(entity: Option[BlockEntity]): BlockState
+
+  def createEntity[Type <: BlockEntity](): BlockEntity
 }

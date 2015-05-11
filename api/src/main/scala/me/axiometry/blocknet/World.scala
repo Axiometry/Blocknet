@@ -2,6 +2,7 @@ package me.axiometry.blocknet
 
 import me.axiometry.blocknet.entity._
 import me.axiometry.blocknet.block._
+import me.axiometry.blocknet.item._
 
 /**
  * Represents a Minecraft world.
@@ -14,9 +15,9 @@ trait World {
     def apply(loc: Location.Block): BlockState
 
     /**
-     * Produce a new world with the specified block state.
+     * Set the block state at the specified block location.
      */
-    def update(loc: Location.Block, block: BlockState): World
+    def update(loc: Location.Block, block: BlockState)
   }
   trait ChunkAccess {
     /**
@@ -25,9 +26,9 @@ trait World {
     def apply(loc: Location.Chunk): Chunk
 
     /**
-     * Produce a new world with the specified chunk.
+     * Set the chunk at the specified chunk location.
      */
-    def update(loc: Location.Chunk, chunk: Chunk): World
+    def update(loc: Location.Chunk, chunk: Chunk)
   }
 
   /**
@@ -36,9 +37,9 @@ trait World {
   def terrain: Terrain
 
   /**
-   * Produces a new world with the specified terrain.
+   * Set the terrain of the world.
    */
-  def terrain_=(terrain: Terrain): World
+  def terrain_=(terrain: Terrain)
 
   /**
    * The dimension of the world.
@@ -46,9 +47,9 @@ trait World {
   def dimension: Dimension
 
   /**
-   * Produces a new world with the specified dimension.
+   * Set the dimension of the world.
    */
-  def dimension_=(dimension: Dimension): World
+  def dimension_=(dimension: Dimension)
 
   /**
    * The difficulty of the world.
@@ -56,9 +57,9 @@ trait World {
   def difficulty: Difficulty
 
   /**
-   * Produces a new world with the specified difficulty.
+   * Set the difficulty of the world.
    */
-  def difficult_=(difficulty: Difficulty): World
+  def difficult_=(difficulty: Difficulty)
 
   /**
    * The height of the world.
@@ -66,9 +67,9 @@ trait World {
   def height: Int
 
   /**
-   * Produces a new world with the specified height.
+   * Set the height of the world.
    */
-  def height_=(height: Int): World
+  def height_=(height: Int)
 
   /**
    * The time of day of the world.
@@ -76,9 +77,9 @@ trait World {
   def time: Long
 
   /**
-   * Produces a new world with the specified time of day.
+   * Set the time of day of the world.
    */
-  def time_=(time: Long): World
+  def time_=(time: Long)
 
   /**
    * The age of the world in ticks.
@@ -86,9 +87,9 @@ trait World {
   def age: Long
 
   /**
-   * Produces a new world with the specified age.
+   * Set the age of the world in ticks.
    */
-  def age_=(age: Long): World
+  def age_=(age: Long)
 
   /**
    * The set of all entities in the world.
@@ -96,40 +97,44 @@ trait World {
   def entities: Set[Entity]
 
   /**
-   * Produces a new world with the specified entity added.
+   * Add the specified entity to the world. The entity must have been created through `createEntity(...)`.
    */
-  def entities_+=(entity: Entity): World
+  def entities_+=(entity: Entity)
 
   /**
-   * Produces a new world with the specified entity removed.
+   * Remove the specified entity from the world. The entity must have been created through `createEntity(...)`.
    */
-  def entities_-=(entity: Entity): World
+  def entities_-=(entity: Entity)
 
   /**
-   * Produces a new world with the specified set of entities.
+   * Replace the set of entities in the world. Each entity must have been created through `createEntity(...)`.
    */
-  def entities_=(entities: Set[Entity]): World
+  def entities_=(entities: Set[Entity])
 
   /**
-   * Retrieves an entity of the specified ID, or None if not found.
+   * Retrieve an entity of the specified ID, or None if not found.
    *
    * @param id The entity's ID
    */
   def entityById(id: Int): Option[Entity]
 
   /**
-   * Produces a new world with the specified entity replaced.
-   */
-  def replaceEntity(original: Entity, updated: Entity): World
-
-  /**
-   * Creates an entity belonging to this world of the specified type with the specified ID and location.
+   * Create an entity belonging to this world of the specified type with the specified ID and location.
    *
    * @param Type The entity's type
    * @param id The entity's ID
    * @param loc The entity's location
    */
-  def createEntity[Type <: Entity](id: Int, loc: Location.Precise)
+  def createEntity[Type <: Entity](id: Int, loc: Location.Precise): Type
+
+  /**
+   * Create an item stack with the specified information.
+   *
+   * @param item The item of the stack
+   * @param data The data value of the stack
+   * @param size The size of the stack
+   */
+  def createItemStack(item: Item, data: Int = 0, size: Int = 1): ItemStack
 
   /**
    * Returns a BlockAccess instance to get and update blocks in this world.

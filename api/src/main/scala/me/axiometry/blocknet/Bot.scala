@@ -12,13 +12,6 @@ import me.axiometry.blocknet.protocol.Protocol
  */
 trait Bot extends Player {
   /**
-   * Run a game update and return the result.
-   *
-   * @return The result of the update
-   */
-  def process(): Bot
-
-  /**
    * The connection to the Minecraft server.
    */
   def protocol: Protocol
@@ -29,17 +22,12 @@ trait Bot extends Player {
   def server: Server
 
   /**
-   * Produce a new bot with the specified server.
-   */
-  def server_=(server: Server): Bot
-
-  /**
    * The entity instance of this bot, or None if this bot has not spawned.
    */
   def player: Option[BotPlayer]
 
   /**
-   * Produce a new bot with the specified player.
+   * Set the entity instance of this bot. Some if spawned, None otherwise.
    */
-  def player_=(player: Option[BotPlayer]): Bot
+  def player_=(player: Option[BotPlayer])
 }

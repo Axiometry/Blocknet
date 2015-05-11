@@ -2,8 +2,10 @@ package me.axiometry.blocknet.item
 
 trait ItemStack {
   def item: Item
-  def damage: Int
+  def data: Int
   def size: Int
 
-  def resize(size: Int): ItemStack
+  def withItem(item: Item): ItemStack
+  def withData(data: Int): ItemStack
+  def withSize(size: Int): ItemStack
 }

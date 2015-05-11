@@ -25,27 +25,22 @@ trait Server {
   def worlds: Set[World]
 
   /**
-   * Produce a new server with specified world added.
+   * Add the specified world. The world must have been created through `createWorld()`.
    */
-  def worlds_+=(world: World): Server
+  def worlds_+=(world: World)
 
   /**
-   * Produce a new server with the specified world removed.
+   * Remove the specified world. The world must have been created through `createWorld()`.
    */
-  def worlds_-=(world: World): Server
+  def worlds_-=(world: World)
 
   /**
-   * Produce a new server with the specified set of worlds.
+   * Replace the set of worlds with the specified set. Each world must have been created by `createWorld()`.
    */
-  def worlds_=(worlds: Set[World]): Server
+  def worlds_=(worlds: Set[World])
 
   /**
-   * Produce a new server with the specified world replaced.
-   */
-  def replaceWorld(original: World, updated: World): Server
-
-  /**
-   * Create a new World instance belonging to this server.
+   * Create a new World instance.
    */
   def createWorld(): World
 
@@ -55,27 +50,22 @@ trait Server {
   def bots: Set[Bot]
 
   /**
-   * Produce a new server with the specified bot added.
+   * Add the specified bot. The bot must have been created through `createBot()`.
    */
-  def bots_+=(bot: Bot): Server
+  def bots_+=(bot: Bot)
 
   /**
-   * Produce a new server with the specified bot removed.
+   * Remove the specified bot. The bot must have been created through `createBot()`.
    */
-  def bots_-=(bot: Bot): Server
+  def bots_-=(bot: Bot)
 
   /**
-   * Produce a new server with the specified set of bots.
+   * Replace the set of bots with the specified set. Each bot must have been created by `createBot()`
    */
-  def bots_=(bots: Set[Bot]): Server
+  def bots_=(bots: Set[Bot])
 
   /**
-   * Produce a new server with the specified bot replaced.
-   */
-  def replaceBot(original: Bot, updated: Bot): Server
-
-  /**
-   * Create a new Bot instance belonging to this server.
+   * Create a new Bot instance.
    *
    * @throws IOException if there was a failure attempting to connect to the server.
    */
