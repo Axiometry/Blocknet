@@ -56,3 +56,10 @@ eclipse {
 		}
 	}
 }
+
+task spec(dependsOn: ['testClasses'], type: JavaExec) {
+	main = 'org.scalatest.tools.Runner'
+	args = ['-R', 'build/classes/test', '-o']
+	classpath = sourceSets.test.runtimeClasspath
+}
+tasks.test.dependsOn += tasks.spec
