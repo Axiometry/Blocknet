@@ -40,7 +40,7 @@ object Location {
   /**
    * Represents a specific, double-precision location of in a Minecraft world.
    */
-  final case class Precise(x: Double, y: Double, z: Double) extends Conversions with ExactConversions {
+  final case class Precise private (x: Double, y: Double, z: Double, unused: Boolean) extends Conversions with ExactConversions {
     if(x.isNaN || y.isNaN || z.isNaN || x.isInfinity || y.isInfinity || z.isInfinity)
       throw new IllegalArgumentException("invalid coordinates")
 
@@ -108,6 +108,10 @@ object Location {
      * same as `toChunk()`
      */
     override def toChunkExact() = toChunk
+  }
+  object Precise {
+    def apply(x: Double, y: Double, z: Double): Precise =
+      apply(x + 0.0, y + 0.0, z + 0.0, false)
   }
 
   /**
@@ -253,14 +257,27 @@ object Location {
     override def toChunkExact() = this
   }
 
-  protected[this] trait extraImplicits {
-    implicit def tuple2Precise(tuple: (Double, Double, Double)) = Precise(tuple._1, tuple._2, tuple._3)
+  /**
+   * Conversions from tuples to locations.
+   */
+  object tupleImplicits {
+    implicit def tuple2PreciseDDD(tuple: (Double, Double, Double)) = Precise(tuple._1, tuple._2, tuple._3)
+    implicit def tuple2PreciseIDD(tuple: (Int,    Double, Double)) = Precise(tuple._1, tuple._2, tuple._3)
+    implicit def tuple2PreciseDID(tuple: (Double, Int,    Double)) = Precise(tuple._1, tuple._2, tuple._3)
+    implicit def tuple2PreciseDDI(tuple: (Double, Double, Int   )) = Precise(tuple._1, tuple._2, tuple._3)
+    implicit def tuple2PreciseIID(tuple: (Int,    Int,    Double)) = Precise(tuple._1, tuple._2, tuple._3)
+    implicit def tuple2PreciseDII(tuple: (Double, Int,    Int   )) = Precise(tuple._1, tuple._2, tuple._3)
+    implicit def tuple2PreciseIDI(tuple: (Int,    Double, Int   )) = Precise(tuple._1, tuple._2, tuple._3)
+    implicit def tuple2PreciseIII(tuple: (Int,    Int,    Int   )) = Precise(tuple._1, tuple._2, tuple._3)
+
+    implicit def tuple2Block(tuple: (Int, Int, Int)) = Block(tuple._1, tuple._2, tuple._3)
+    implicit def tuple2Chunk(tuple: (Int, Int, Int)) = Chunk(tuple._1, tuple._2, tuple._3)
   }
 
   /**
    * Implicit conversions between the location types
    */
-  object implicits extends extraImplicits {
+  object conversionImplicits {
     implicit def convert2Precise(loc: Conversions): Precise = loc.toPrecise
     implicit def convert2Block(loc: Conversions): Block = loc.toBlock
     implicit def convert2Chunk(loc: Conversions): Chunk = loc.toChunk
@@ -269,7 +286,7 @@ object Location {
   /**
    * Exact implicit conversions between the location types.
    */
-  object exactImplicits extends extraImplicits {
+  object exactConversionImplicits {
     implicit def convert2PreciseExact(loc: ExactConversions): Precise = loc.toPreciseExact
     implicit def convert2BlockExact(loc: ExactConversions): Block = loc.toBlockExact
     implicit def convert2ChunkExact(loc: ExactConversions): Chunk = loc.toChunkExact
