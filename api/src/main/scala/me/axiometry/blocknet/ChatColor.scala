@@ -1,5 +1,7 @@
 package me.axiometry.blocknet
 
+import scala.annotation.tailrec
+
 /**
  * Represents a chat color marker for use in Minecraft chat.
  */
@@ -64,7 +66,7 @@ object ChatColor {
         Underline, Italic)
 
   private final val stripColorPattern = java.util.regex.Pattern.compile(s"$codePrefix[0-9A-FK-ORa-fk-or]")
-  private final val codeMappings: Map[Char, ChatColor] = values.map(c => c.code -> c).toMap
+  private final val codeMappings: Map[Char, ChatColor] = values.map(c => c.code.toLower -> c).toMap ++ values.map(c => c.code.toUpper -> c).toMap
 
   /**
    * Retrieve a chat color by code.
@@ -81,7 +83,10 @@ object ChatColor {
    * @param string The string to filter
    * @return A string containing no chat colors
    */
-  def strip(string: String) = stripColorPattern.matcher(string).replaceAll("")
+  @tailrec def strip(string: String): String = stripColorPattern.matcher(string) match {
+    case matcher if matcher.find() => strip(matcher.replaceAll(""))
+    case _ => string
+  }
 
   case object Black extends ColorChatColor('0')
   case object DarkBlue extends ColorChatColor('1')
