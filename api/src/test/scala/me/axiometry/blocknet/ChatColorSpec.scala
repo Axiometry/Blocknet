@@ -1,9 +1,8 @@
 package me.axiometry.blocknet
 
-import org.scalatest.FunSpec
 import scala.collection.mutable
 
-class ChatColorSpec extends FunSpec {
+class ChatColorSpec extends UnitSpec {
   describe("ChatColor") {
     val (codes, colors, formats) = ("0123456789abcdefklmnor", "0123456789abcdef", "klmno")
 
