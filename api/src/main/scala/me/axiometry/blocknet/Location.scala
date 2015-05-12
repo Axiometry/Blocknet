@@ -40,7 +40,11 @@ object Location {
   /**
    * Represents a specific, double-precision location of in a Minecraft world.
    */
-  final case class Precise private (x: Double, y: Double, z: Double, unused: Boolean) extends Conversions with ExactConversions {
+  abstract class Precise private() extends Conversions with ExactConversions {
+    def x: Double
+    def y: Double
+    def z: Double
+
     if(x.isNaN || y.isNaN || z.isNaN || x.isInfinity || y.isInfinity || z.isInfinity)
       throw new IllegalArgumentException("invalid coordinates")
 
@@ -110,14 +114,20 @@ object Location {
     override def toChunkExact() = toChunk
   }
   object Precise {
-    def apply(x: Double, y: Double, z: Double): Precise =
-      apply(x + 0.0, y + 0.0, z + 0.0, false)
+    private case class PreciseImpl(override val x: Double, override val y: Double, override val z: Double) extends Precise
+
+    def apply(x: Double, y: Double, z: Double): Precise = PreciseImpl(x + 0.0, y + 0.0, z + 0.0)
+    def unapply(loc: Precise): Option[(Double, Double, Double)] = Some((loc.x, loc.y, loc.z))
   }
 
   /**
    * Represents a location of a block in a Minecraft world.
    */
-  final case class Block(x: Integer, y: Integer, z: Integer) extends Conversions with ExactConversions {
+  abstract class Block private() extends Conversions with ExactConversions {
+    def x: Int
+    def y: Int
+    def z: Int
+
     def +(loc: Block) = Block(x + loc.x, y + loc.y, z + loc.z)
     def -(loc: Block) = Block(x - loc.x, y - loc.y, z - loc.z)
 
@@ -182,11 +192,22 @@ object Location {
      */
     override def toChunkExact() = toChunk
   }
+  object Block {
+    private case class BlockImpl(override val x: Int, override val y: Int, override val z: Int) extends Block
+
+    def apply(x: Int, y: Int, z: Int): Block = BlockImpl(x, y, z)
+    def unapply(loc: Block): Option[(Int, Int, Int)] = Some((loc.x, loc.y, loc.z))
+  }
+
 
   /**
    * Represents a location of a chunk (a 16x16x16 section of blocks) in a Minecraft world.
    */
-  final case class Chunk(x: Integer, y: Integer, z: Integer) extends Conversions with ExactConversions {
+  abstract class Chunk private() extends Conversions with ExactConversions {
+    def x: Int
+    def y: Int
+    def z: Int
+
     def +(loc: Chunk) = Chunk(x + loc.x, y + loc.y, z + loc.z)
     def -(loc: Chunk) = Chunk(x - loc.x, y - loc.y, z - loc.z)
 
@@ -255,6 +276,12 @@ object Location {
      * The exact chunk location representation of a chunk location is simply itself.
      */
     override def toChunkExact() = this
+  }
+  object Chunk {
+    private case class ChunkImpl(override val x: Int, override val y: Int, override val z: Int) extends Chunk
+
+    def apply(x: Int, y: Int, z: Int): Chunk = ChunkImpl(x, y, z)
+    def unapply(loc: Chunk): Option[(Int, Int, Int)] = Some((loc.x, loc.y, loc.z))
   }
 
   /**

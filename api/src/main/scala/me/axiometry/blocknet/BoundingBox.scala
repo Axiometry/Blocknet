@@ -10,7 +10,10 @@ import Location.{Precise => Pos}
  * offset that results in a negative size will be trimmed so that the min and max along that
  * axis are equal and are at the midpoint of the original axis coverage.
  */
-final case class BoundingBox private (min: Pos, max: Pos) {
+abstract class BoundingBox private() {
+  def min: Pos
+  def max: Pos
+
   /**
    * Produce a new bounding box which has been contracted by the specified amounts.
    *
@@ -110,8 +113,11 @@ final case class BoundingBox private (min: Pos, max: Pos) {
     (min.y <= box.min.y && max.y >= box.max.y) &&
     (min.z <= box.min.z && max.z >= box.max.z)
 }
-
 object BoundingBox {
+  private case class BoundingBoxImpl(override val min: Pos, override val max: Pos) extends BoundingBox
+
+  def apply(min: Pos, max: Pos): BoundingBox = apply(min.x, min.y, min.z, max.x, max.y, max.z)
   def apply(minX: Double, minY: Double, minZ: Double, maxX: Double, maxY: Double, maxZ: Double): BoundingBox =
-    apply(Pos(minX, minY, minZ), Pos(maxX, maxY, maxZ))
+    BoundingBoxImpl(Pos(math.min(minX, maxX), math.min(minY, maxY), math.min(minZ, maxZ)),
+                    Pos(math.max(minX, maxX), math.max(minY, maxY), math.max(minZ, maxZ)))
 }
