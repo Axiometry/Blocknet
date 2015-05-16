@@ -1,0 +1,33 @@
+
+configure(subprojects) { project ->
+	apply plugin: 'scala'
+	
+	compileJava {
+		sourceCompatibility = 1.8
+		targetCompatibility = 1.8
+	}
+	compileScala {
+		sourceCompatibility = 1.8
+		targetCOmpatibility = 1.8
+	}
+	
+	repositories {
+		mavenCentral()
+		mavenLocal()
+	}
+	
+	dependencies {
+		compile('org.scala-lang:scala-library:2.11.4')
+		
+		testCompile('org.scalatest:scalatest_2.11:2.2.0')
+		testCompile('org.scalamock:scalamock-scalatest-support_2.11:3.1.4')
+	}
+	
+	
+	task spec(dependsOn: ['testClasses'], type: JavaExec) {
+		main = 'org.scalatest.tools.Runner'
+		args = ['-R', 'build/classes/test', '-o']
+		classpath = sourceSets.test.runtimeClasspath
+	}
+	tasks.test.dependsOn += tasks.spec
+}
