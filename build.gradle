@@ -40,6 +40,17 @@ configure(subprojects) { project ->
 	}
 	tasks.test.dependsOn += tasks.spec
 	
+	task pack(type: Jar) {
+		manifest {
+			attributes 'Implementation-Title': project.name,
+					   'Implementation-Version': project.version
+		}
+		baseName = project.name + '-all'
+		from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+		with jar
+	}
+	tasks.assemble.dependsOn(pack)
+	
 	
 	eclipse {
 		classpath {
@@ -48,8 +59,6 @@ configure(subprojects) { project ->
 			// Prevent addition of duplicate JREs to classpath
 			def hasContainer = true
 			containers.clear()
-			System.out.println(project.name)
-			System.out.println(file)
 			file.beforeMerged { classpath ->
 				if(!classpath.entries.find { entry -> entry.kind == 'con' }) {
 					containers.add('org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8')
