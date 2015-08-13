@@ -1,4 +1,4 @@
-package me.axiometry.blocknet.protocol
+package me.axiometry.blocknet.minecraft.net
 
 import me.axiometry.blocknet.Server
 import me.axiometry.blocknet.Bot

@@ -2,7 +2,6 @@ package me.axiometry.blocknet
 
 import me.axiometry.blocknet.entity._
 import me.axiometry.blocknet.block._
-import me.axiometry.blocknet.protocol.Protocol
 
 /**
  * Represents an agent with a session on a Minecraft server.
@@ -11,11 +10,6 @@ import me.axiometry.blocknet.protocol.Protocol
  * These should be created through `Server.createBot(): Bot`
  */
 trait Bot extends Player {
-  /**
-   * The connection to the Minecraft server.
-   */
-  def protocol: Protocol
-
   /**
    * The Server instance to which this bot belongs.
    */

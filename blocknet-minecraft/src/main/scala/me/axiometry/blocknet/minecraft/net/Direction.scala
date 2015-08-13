@@ -1,4 +1,4 @@
-package me.axiometry.blocknet.protocol
+package me.axiometry.blocknet.minecraft.net
 
 sealed trait Direction
 object Direction {

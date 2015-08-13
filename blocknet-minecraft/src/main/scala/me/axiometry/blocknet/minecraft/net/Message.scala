@@ -1,4 +1,4 @@
-package me.axiometry.blocknet.protocol
+package me.axiometry.blocknet.minecraft.net
 
 trait Message {
   def name: String
